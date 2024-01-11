@@ -20,7 +20,7 @@
       </el-col>
       <el-col :span="16" :xs="24">
         <div class="right">
-          <div class="top">
+          <div class="right-top">
             <img class="img-circle" :src="'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'">
             <span class="title">基于多模态大模型的工程结构震害智能评估系统</span>
             <br><br><br>
@@ -82,8 +82,9 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .left {
+  float: left;
   width: 100%;
   height: 650px;
   overflow: hidden;
@@ -105,61 +106,6 @@ export default {
     width: calc(100% + 2px);
     height: 550px;
     overflow: auto;
-
-    .session-item {
-      position: relative;
-      width: 100%;
-      padding: 12px 10% 16px;
-      cursor: pointer;
-      background-color: #fff;
-      &:after {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        display: block;
-        width: 80%;
-        height: 1px;
-        content: '';
-        background-color: #e6e6e6;
-        transform: translate(-50%, 0);
-      }
-      .svg-container {
-        float: left;
-        width: 40px;
-        height: 40px;
-        margin-right: 12px;
-        border-radius: 50%;
-        object-fit: cover;
-        .svg-icon {
-          width: 100%;
-          height: 100%;
-        }
-      }
-      .name {
-        font-size: 14px;
-        line-height: 22px;
-        color: #1a1a1a;
-        font-weight: 600;
-      }
-      .time {
-        font-size: 14px;
-        position: absolute;
-        top: 16px;
-        right: 10%;
-        padding: 0 0 5px 5px;
-        color: #999;
-        background-color: #fff;
-      }
-      .preview {
-        font-size: 14px;
-        display: inline-block;
-        overflow: hidden !important;
-        width: 70%;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        color: #999;
-      }
-    }
   }
 }
 .right {
@@ -168,7 +114,7 @@ export default {
   width: 100%;
   height: 650px;
   background-color: #f5f9ff;
-  .top {
+  .right-top {
     width: 100%;
     height: 130px;
     padding: 20px 20px;
