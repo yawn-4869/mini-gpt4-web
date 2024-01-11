@@ -26,13 +26,14 @@
             />
           </div>
           <form class="message-input">
-            <input type="text" class="input-field" placeholder="请输入问题并发送">
-            <div class="submitBtn">
-              <el-button>
-                发送
-              </el-button>
-            </div>
+            <el-input v-model="input" placeholder="请输入内容" />
+            <el-button icon="el-icon-paperclip" circle />
+            <el-button type="primary" icon="el-icon-position" circle />
           </form>
+          <div class="button-wrapper">
+            <el-button>保存</el-button>
+            <el-button @click="chatClear">清空</el-button>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -69,7 +70,8 @@ export default {
         { id: 1, role: 'user', created: '2024-01-08', content: 'description1' },
         { id: 1, role: 'robot', created: '2024-01-08', content: 'description1' }
 
-      ]
+      ],
+      input: ''
     }
   },
   methods: {
@@ -78,12 +80,15 @@ export default {
     },
     chatRestart() {
       console.log('重新开始')
+    },
+    chatClear() {
+      alert('')
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .left {
   float: left;
   width: 100%;
@@ -140,12 +145,15 @@ export default {
   .message-input {
     position: absolute;
     display: flex;
-    width: 100%;
-    align-items: center;
-    padding: 30px;
-    border-top: 1px solid #e6e6e6;
+    left: 10px;
+    width: 95%;
+    justify-content: center;
+    padding: 20px;
+    border: 1px solid #e6e6e6;
+    border-radius: 20px;
+    background-color: #f5f9ff;
     .input-field {
-      font-size: 18px;
+      font-size: 14px;
       flex: 1;
       border: none;
 
@@ -157,7 +165,11 @@ export default {
 
     }
   }
-
+  .button-wrapper {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
 }
 </style>
 

@@ -82,7 +82,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 .left {
   width: 100%;
   height: 650px;
@@ -167,6 +167,7 @@ export default {
   float: left;
   width: 100%;
   height: 650px;
+  background-color: #f5f9ff;
   .top {
     width: 100%;
     height: 130px;
