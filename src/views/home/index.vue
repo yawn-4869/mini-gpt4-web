@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="20" class="row-container">
+    <el-row :gutter="80" class="row-container">
       <el-col :span="12" :xs="24">
         <div class="left">
           <div class="top">
-            <img class="img-circle" :src="'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'">
-            <span class="title">基于多模态大模型的工程结构震害智能评估系统</span>
+            <img class="img-circle" :src="'/favicon.ico'">
+            <span class="title">EDA-QA</span>
             <br><br><br>
             <span class="detail">请选择一个合适的模型开始聊天。</span>
           </div>
@@ -43,9 +43,9 @@
             </el-form>
           </div>
           <div class="bottom">
-            <el-button type="primary" style="width: 100%" @click="startChat">开始聊天</el-button>
+            <el-button type="primary" style="width: 100%; background-color: #671afb" @click="startChat">开始聊天</el-button>
             <br><br>
-            <el-button type="primary" style="width: 100%" @click="resetSelect">重置选择</el-button>
+            <el-button type="primary" style="width: 100%; background-color: #671afb" @click="resetSelect">重置选择</el-button>
           </div>
         </div>
       </el-col>
@@ -55,13 +55,15 @@
             <h3>模型优化</h3>
           </div>
           <div class="model-prompt">
-            <el-button type="primary" style="width:100%;" @click="dataGet">训练数据获取</el-button>
-            <br><br>
-            <el-button type="primary" style="width:100%;" @click="dataPreprocess">训练数据预处理</el-button>
-            <br><br>
-            <el-button type="primary" style="width:100%;" @click="modelStart">开始训练</el-button>
-            <br><br>
-            <el-button type="primary" style="width:100%;" @click="weightManage">训练权重管理</el-button>
+            <div class="button-wrapper">
+              <el-button type="primary" style="width:100%; background-color: #671afb" @click="dataGet">训练数据获取</el-button>
+              <br><br>
+              <el-button type="primary" style="width:100%; background-color: #671afb" @click="dataPreprocess">训练数据预处理</el-button>
+              <br><br>
+              <el-button type="primary" style="width:100%; background-color: #671afb" @click="modelStart">开始训练</el-button>
+              <br><br>
+              <el-button type="primary" style="width:100%; background-color: #671afb" @click="weightManage">训练权重管理</el-button>
+            </div>
           </div>
         </div>
       </el-col>
@@ -97,7 +99,27 @@ export default {
     ])
   },
   methods: {
-    handleSetLineChartData(type) {
+    handleSelect() {
+      this.$refs.modelForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          this.$store.dispatch('user/login', this.modelForm).then(() => {
+            this.$router.push({ path: '/chat' })
+            this.loading = false
+          }).catch(() => {
+            this.loading = false
+          })
+        } else {
+          alert('请选择模型！')
+          return false
+        }
+      })
+    },
+
+    resetSelect() {
+      this.modelForm.accuracy = ''
+      this.modelForm.LLM = ''
+      this.modelForm.VLM = ''
     }
   }
 }
@@ -168,15 +190,24 @@ export default {
   .right-top {
     height: 200px;
     padding: 20px;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 20px;
   }
   .model-prompt {
+    display: flex;
+    flex-direction: column; /* 设置为纵向排列，如果需要横向排列可以使用 row */
+    justify-content: center; /* 垂直居中 */
+    align-items: center; /* 水平居中 */
     height: 400px;
     margin-top: 50px;
     background-color: #fff;
     border: 1px solid #e6e6e6;
     border-radius: 20px;
     padding: 20px;
-    text-align: center;
+    .button-wrapper {
+      width: 100%;
+    }
   }
 }
 </style>

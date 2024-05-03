@@ -1,8 +1,4 @@
 /**
- * Created by PanJiaChen on 16/11/18.
- */
-
-/**
  * Parse the time to string
  * @param {(Object|string|number)} time
  * @param {string} cFormat
@@ -114,4 +110,20 @@ export function param2Obj(url) {
     }
   })
   return obj
+}
+
+export function getNowTimeStr() {
+  const now = new Date(); // 创建一个新的 Date 对象，表示当前时间
+
+  // 使用 Date 对象的方法获取年、月、日、时、分、秒
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1; // 月份从 0 开始，因此要加 1
+  const day = now.getDate();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const second = now.getSeconds();
+
+  // 将获取到的时间信息拼接成字符串
+  const currentTimeString = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  return currentTimeString
 }

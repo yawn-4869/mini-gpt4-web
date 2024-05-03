@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'active-session': active}">
+  <div :class="{'active-session': active}" @click="setActiveSession(item)">
     <span class="svg-container">
       <svg-icon icon-class="pdf" />
     </span>
@@ -22,12 +22,17 @@ export default {
       type: Object,
       required: true
     }
+  },
+  methods: {
+    setActiveSession(session) {
+      this.$emit('click', session);
+    }
   }
 }
 </script>
 
 <style lang="scss">
-.active-session {
+.session-item.active-session {
   margin-top: -1px;
   margin-left: -1px;
   padding-top: 13px;

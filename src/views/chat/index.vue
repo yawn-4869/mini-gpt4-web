@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="20" class="row-container">
+    <el-row :gutter="80" class="row-container">
       <el-col :span="12" :xs="24">
         <div class="left">
           <div class="top">
             <el-input placeholder="搜索" suffix-icon="el-icon-search" />
           </div>
           <div class="image-upload">
-            <SingleImageUpload v-model="postForm.image_uri" />
+            <SingleImageUpload ref="imgUpload" id="myImgUpload" url="http://localhost:5001/api/conversation/create" v-model="postForm.image_uri" />
           </div>
           <div class="bottom">
-            <el-button :loading="loading" type="primary" style="width:80%; background-color: #671afb" @click="chatStart">开始聊天</el-button>
+            <el-button :loading="startLoading" type="primary" style="width:80%; background-color: #671afb; border-color: #671afb;" @click="chatStart">开始聊天</el-button>
             <br><br>
-            <el-button :loading="loading" type="primary" style="width:80%; background-color: #671afb" @click="chatRestart">重新开始</el-button>
+            <el-button :loading="resetLoading" type="primary" style="width:80%; background-color: #671afb; border-color: #671afb;" @click="chatRestart">重新开始</el-button>
           </div>
         </div>
       </el-col>
@@ -26,12 +26,11 @@
             />
           </div>
           <form class="message-input">
-            <el-input v-model="input" placeholder="请输入内容" />
-            <el-button icon="el-icon-paperclip" circle />
-            <el-button type="primary" icon="el-icon-position" circle />
+            <el-input v-model="questionForm.content" placeholder="请输入内容" />
+            <el-button icon="el-icon-paperclip" circle @click="sendQuestion"/>
+            <el-button :loading="askLoading" type="primary" icon="el-icon-position" style="background-color: #671afb; border-color: #671afb;" @click="sendQuestion" circle />
           </form>
           <div class="button-wrapper">
-            <el-button>保存</el-button>
             <el-button @click="chatClear">清空</el-button>
           </div>
         </div>
@@ -43,6 +42,10 @@
 <script>
 import SingleImageUpload from '@/views/chat/components/SingleImageUpload.vue'
 import MessageRow from '@/views/chat/components/MessageRow.vue'
+import { getLastConversation, getLastMessage, removeLastMessage } from '@/utils/auth';
+import { setLastMessage } from '@/utils/auth';
+import { MessageBox } from 'element-ui'
+import { mapGetters } from 'vuex';
 
 const chatForm = {
   title: '', // 主题
@@ -52,37 +55,102 @@ const chatForm = {
   id: undefined,
   time: undefined
 }
+
+const chatMessage = {
+  id: '',
+  role: '',
+  createdTime:'',
+  content: ''
+}
+
 export default {
   components: { MessageRow, SingleImageUpload },
+  computed: {
+    ...mapGetters(['conversationId']),
+  },
   data() {
     return {
       postForm: Object.assign({}, chatForm),
-      loading: false,
+      questionForm: Object.assign({}, chatMessage),
+      startLoading: false,
+      resetLoading: false,
+      askLoading: false,
       messageList: [
-        { id: 1, role: 'user', created: '2024-01-08', content: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur' },
-        { id: 1, role: 'robot', created: '2024-01-08', content: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur' },
-        { id: 1, role: 'user', created: '2024-01-08', content: 'description1' },
-        { id: 1, role: 'robot', created: '2024-01-08', content: 'description1' },
-        { id: 1, role: 'user', created: '2024-01-08', content: 'description1' },
-        { id: 1, role: 'robot', created: '2024-01-08', content: 'description1' },
-        { id: 1, role: 'user', created: '2024-01-08', content: 'description1' },
-        { id: 1, role: 'robot', created: '2024-01-08', content: 'description1' },
-        { id: 1, role: 'user', created: '2024-01-08', content: 'description1' },
-        { id: 1, role: 'robot', created: '2024-01-08', content: 'description1' }
-
       ],
-      input: ''
+      lastMessageId: 0
+    }
+  },
+  created() {
+    if(getLastConversation()) {
+      this.lastMessageId = getLastMessage() ? getLastMessage() : 0;
+      if(this.$store.state.conversation.conversationId != 0) {
+        this.questionForm.id = this.$store.state.conversation.conversationId
+        this.$store.dispatch('conversation/detail', this.questionForm).then((response) => {
+          const {answers, asks, id} = response.data
+          const len = Math.max(answers.length, asks.length)
+          for(let i = this.lastMessageId; i < len; ++i) {
+            if(i < asks.length) {
+              this.messageList.push({id: asks[i].id, role: 'user', created: asks[i].createTime, content: asks[i].content})
+            }
+            if(i < answers.length) {
+              this.messageList.push({id: answers[i].id, role: 'robot', created: answers[i].createTime, content: answers[i].content})
+            }
+          }
+        })
+      }
     }
   },
   methods: {
     chatStart() {
-      console.log('开始聊天')
+      this.startLoading = true;
+      this.$refs.imgUpload.uploadImg();
+      this.messageList = []
+      this.startLoading = false;
+      removeLastMessage();
+      this.lastMessageId = 0;
     },
     chatRestart() {
-      console.log('重新开始')
+      this.resetLoading = true;
+      this.$refs.imgUpload.uploadImg();
+      this.messageList = []
+      this.resetLoading = false;
+      removeLastMessage();
+      this.lastMessageId = 0;
+    },
+    sendQuestion() {
+      console.log(this.$store.state.conversation.conversationId)
+      if(this.questionForm.content === '') {
+        return
+      }
+      if(this.$store.state.conversation.conversationId === undefined || this.$store.state.conversation.conversationId == 0) {
+        this.$message({ message: '您还未上传图片, 请上传图片后点击左边开始聊天按钮再发送问题', type: 'warning' });
+        return
+      }
+      this.questionForm.role = "user"
+      this.askLoading = true;
+      this.questionForm.id = this.$store.state.conversation.conversationId
+      this.messageList.push({id: this.questionForm.id, role: this.questionForm.role, created: '2024-04-24', content: this.questionForm.content})
+      this.$store.dispatch('conversation/ask', this.questionForm).then((response) => {
+        console.log(response)
+        const answer = response.substring(5).trim();
+        console.log(answer)
+        this.messageList.push({id: this.questionForm.id, role: 'robot', created: '2024-04-26', content: answer})
+        this.askLoading = false
+      }).catch(() => {
+        this.askLoading = false
+      })
+      this.questionForm.content = ""
     },
     chatClear() {
-      alert('')
+      MessageBox.confirm('确认要清空当前聊天吗？这并不会清空您在云端的聊天记录', '清空确认', {
+          confirmButtonText: '确认',
+          cancelButtonText: '取消',
+          type: 'warning'
+      }).then(()=>{
+        const lastMessageId = this.messageList.length
+        setLastMessage(lastMessageId)
+        this.messageList = []
+      });
     }
   }
 }

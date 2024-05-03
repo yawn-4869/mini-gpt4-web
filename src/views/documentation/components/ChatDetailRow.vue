@@ -1,7 +1,7 @@
 <template>
   <div :class="['message-wrapper', message.role === 'user' ? 'reverse' : '']">
     <div class="avatar-wrapper">
-      <el-avatar v-if="message.role === 'user'" :src="userAvatar"  class="avatar" />
+      <el-avatar v-if="message.role === 'user'" :src="userAvatar" class="avatar" />
       <el-avatar v-else :src="robotAvatar" class="avatar" />
     </div>
     <div class="message-box-wrapper">
@@ -11,10 +11,10 @@
     </div>
   </div>
 </template>
-
+  
 <script>
 export default {
-  name: 'MessageRow',
+  name: 'ChatDetailRow',
   props: {
     userAvatar: {
       type: String,
@@ -74,7 +74,7 @@ export default {
     justify-content: flex-end;
 
     .message-box {
-      background-color: #8c70ff;
+      background-color: #681afd;
       color: #fff;
 
       &-wrapper {
@@ -89,3 +89,4 @@ export default {
   }
 }
 </style>
+  

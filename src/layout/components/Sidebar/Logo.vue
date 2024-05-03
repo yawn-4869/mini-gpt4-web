@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       title: '基于多模态大模型的工程结构震害智能评估系统',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      logo: '/favicon.ico'
     }
   }
 }

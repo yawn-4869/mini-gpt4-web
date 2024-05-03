@@ -30,22 +30,18 @@ export default {
   methods: {
     dataGet() {
       // TODO: 数据获取相关代码
-      console.log('获取数据')
     },
 
     dataPreprocess() {
       // TODO: 数据预处理相关代码
-      console.log('数据预处理')
     },
 
     modelStart() {
       // TODO: 数据训练相关代码
-      console.log('开始训练')
     },
 
     weightManage() {
       // TODO: 数据权重管理相关代码
-      console.log('权重管理')
     }
   }
 }

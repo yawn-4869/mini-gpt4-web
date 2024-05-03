@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function signup(data) {
+export function register(data) {
   return request({
-    url: '/mini-gpt4-web/user/signup',
+    url: '/user/register',
     method: 'post',
     data
   })
@@ -10,23 +10,22 @@ export function signup(data) {
 
 export function login(data) {
   return request({
-    url: '/mini-gpt4-web/user/login',
+    url: '/user/login',
     method: 'post',
     data
   })
 }
 
-export function getInfo(token) {
+export function getInfo() {
   return request({
-    url: '/mini-gpt4-web/user/info',
+    url: '/user/get/login',
     method: 'get',
-    params: { token }
   })
 }
 
 export function logout() {
   return request({
-    url: '/mini-gpt4-web/user/logout',
+    url: '/user/logout',
     method: 'post'
   })
 }

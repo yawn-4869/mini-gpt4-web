@@ -1,9 +1,9 @@
 <template>
-  <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+  <div class="register-container">
+    <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">登录</h3>
+        <h3 class="title">注册</h3>
       </div>
 
       <el-form-item prop="userAccount">
@@ -12,7 +12,7 @@
         </span>
         <el-input
           ref="userAccount"
-          v-model="loginForm.userAccount"
+          v-model="registerForm.userAccount"
           placeholder="请输入用户名"
           name="userAccount"
           type="text"
@@ -28,24 +28,44 @@
         <el-input
           :key="passwordType"
           ref="userPassword"
-          v-model="loginForm.userPassword"
+          v-model="registerForm.userPassword"
           :type="passwordType"
           placeholder="请输入密码"
           name="userPassword"
           tabindex="2"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="handleRegister"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;background-color: #671afb; border-color: #671afb;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-form-item prop="checkPassword">
+        <span class="svg-container">
+          <svg-icon icon-class="password" />
+        </span>
+        <el-input
+          :key="checkPasswordType"
+          ref="checkPassword"
+          v-model="registerForm.checkPassword"
+          :type="checkPasswordType"
+          placeholder="请确认密码"
+          name="checkPassword"
+          tabindex="3"
+          auto-complete="on"
+          @keyup.enter.native="handleRegister"
+        />
+        <span class="show-pwd" @click="showCheckPwd">
+          <svg-icon :icon-class="checkPasswordType === 'password' ? 'eye' : 'eye-open'" />
+        </span>
+      </el-form-item>
 
-      <div class="tips">
-        <router-link to="/register">没有帐号？立即注册</router-link>
-      </div>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;background-color: #671afb; border-color: #671afb;" @click.native.prevent="handleRegister">注册</el-button>
+
+    <div class="tips">
+      <router-link to="/login">已有帐号？跳转登录</router-link>
+    </div>
 
     </el-form>
   </div>
@@ -55,7 +75,7 @@
 import { validUsername } from '@/utils/validate'
 
 export default {
-  name: 'Login',
+  name: 'Register',
   data() {
     const validateUsername = (rule, value, callback) => {
       if(value.length < 4) {
@@ -69,22 +89,32 @@ export default {
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 8) {
-        callback(new Error('密码长度必须不少于8位'))
+        callback(new Error('密码长度不少于8位'))
+      } else {
+        callback()
+      }
+    }
+    const validateCheckPassword = (rule, value, callback) => {
+      if (value.length < 8) {
+        callback(new Error('密码长度不少于8位'))
       } else {
         callback()
       }
     }
     return {
-      loginForm: {
+      registerForm: {
+        checkPassword: '',
         userAccount: '',
-        userPassword: ''
+        userPassword: '',
       },
-      loginRules: {
+      registerRules: {
         userAccount: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        userPassword: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        userPassword: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        checkPassword: [{ required: true, trigger: 'blur', validator: validateCheckPassword }],
       },
       loading: false,
       passwordType: 'password',
+      checkPasswordType: 'password',
       redirect: undefined
     }
   },
@@ -104,14 +134,25 @@ export default {
         this.passwordType = 'password'
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
+        this.$refs.uesrPassword.focus()
       })
     },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+
+    showCheckPwd() {
+      if (this.checkPasswordType === 'password') {
+        this.checkPasswordType = ''
+      } else {
+        this.checkPasswordType = 'password'
+      }
+      this.$nextTick(() => {
+        this.$refs.checkPassword.focus()
+      })
+    },
+    handleRegister() {
+      this.$refs.registerForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/register', this.registerForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
@@ -136,13 +177,13 @@ $light_gray:#889aa4;
 $cursor: #889aa4;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
+  .register-container .el-input input {
     color: $cursor;
   }
 }
 
 /* reset element-ui css */
-.login-container {
+.register-container {
   .el-input {
     display: inline-block;
     height: 47px;
@@ -181,13 +222,13 @@ $light_gray:#eee;
 $light_green:#483595;
 $dark_green: #483595;
 
-.login-container {
+.register-container {
   min-height: 100%;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
 
-  .login-form {
+  .register-form {
     position: relative;
     width: 520px;
     max-width: 100%;

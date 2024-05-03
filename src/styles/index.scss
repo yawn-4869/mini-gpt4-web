@@ -9,7 +9,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-family: Times New Roman, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
 label {
@@ -61,7 +61,11 @@ div:focus {
 
 // main-container global css
 .app-container {
-  padding: 20px;
+  padding: 50px;
   height: 700px;
+  background-color: #f5f9ff;
+}
+
+.main-container {
   background-color: #f5f9ff;
 }
