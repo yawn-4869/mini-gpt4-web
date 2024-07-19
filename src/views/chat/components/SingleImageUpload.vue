@@ -1,6 +1,8 @@
 <template>
   <div class="upload-container">
     <el-upload
+      class="image-uploader"
+      drag
       :id="id"
       :ref="id"
       :action="url"
@@ -10,8 +12,6 @@
       :file-list="fileList"
       :auto-upload="false"
       :on-change="uploadImgChanged"
-      class="image-uploader"
-      drag
       accept=".jpg,.jpeg,.JPG,.JPEG"
       name="image"
     >
@@ -160,18 +160,21 @@ export default {
 @import "~@/styles/mixin.scss";
 .upload-container {
   width: 100%;
+  height: 100%;
   position: relative;
   @include clearfix;
   .image-uploader {
     width: 100%;
+    height: 100%;
     float: left;
   }
   .image-null {
-
+    width: 100%;
+    height: 300px;
   }
   .image-preview {
     width: 100%;
-    height: 400px;
+    height: 300px;
     position: relative;
     border: 1px dashed #d9d9d9;
     float: left;
@@ -182,6 +185,7 @@ export default {
       img {
         width: 100%;
         height: 100%;
+        object-fit: contain;
       }
     }
     .image-preview-action {

@@ -37,7 +37,7 @@ export default {
   margin-left: -1px;
   padding-top: 13px;
   border: 0;
-  background-color: #671afb;
+  background-color: #2171b5;
   width: calc(100% + 2px);
   padding-left: calc(10% + 1px);
   span {

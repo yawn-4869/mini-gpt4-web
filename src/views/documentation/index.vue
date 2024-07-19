@@ -23,7 +23,7 @@
           <div class="right-top">
             <img class="img-circle" :src="'/favicon.ico'">
             <span class="title">基于多模态大模型的工程结构震害智能评估系统</span>
-            <br><br><br>
+            <br><br>
             <span class="detail">请选择一个问答记录，进行处理和保存。</span>
           </div>
           <div class="chat">
@@ -138,7 +138,7 @@ export default {
   float: left;
   width: 100%;
   min-width: 250px;
-  height: 650px;
+  height: 500px;
   overflow: hidden;
   border: 1px solid #e6e6e6;
   border-radius: 20px 20px 20px 20px;
@@ -157,7 +157,7 @@ export default {
     border-left: 1px solid #e6e6e6;
     width: calc(100% + 2px);
     min-width: 280px;
-    height: 550px;
+    height: 420px;
     overflow: auto;
   }
 }
@@ -165,7 +165,7 @@ export default {
   position: relative;
   float: left;
   width: 100%;
-  height: 650px;
+  height: 500px;
   background-color: #f5f9ff;
   .right-top {
     width: 100%;
@@ -193,18 +193,19 @@ export default {
         display: block;
         margin-left: 100px;
         color: #999;
+        font-size: 18px;
     }
   }
   .chat {
     width: 100%;
-    height: 500px;
+    height: 350px;
     margin-top: 20px;
     background-color: #fff;
     border: 1px solid #e6e6e6;
     border-radius: 20px 20px 20px 20px;
     .chat-messages {
-      height: 420px;
-      max-height: 420px;
+      height: 270px;
+      max-height: 270px;
       overflow: auto;
       padding: 30px;
     }

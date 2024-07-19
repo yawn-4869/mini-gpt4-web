@@ -61,7 +61,7 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;background-color: #671afb; border-color: #671afb;" @click.native.prevent="handleRegister">注册</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;background-color: #4292c6; border-color: #4292c6;" @click.native.prevent="handleRegister">注册</el-button>
 
     <div class="tips">
       <router-link to="/login">已有帐号？跳转登录</router-link>
@@ -219,8 +219,8 @@ $cursor: #889aa4;
 $bg:#eee;
 $dark_gray:#889aa4;
 $light_gray:#eee;
-$light_green:#483595;
-$dark_green: #483595;
+$light_green:#4292c6;
+$dark_green: #4292c6;
 
 .register-container {
   min-height: 100%;

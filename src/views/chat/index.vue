@@ -10,9 +10,8 @@
             <SingleImageUpload ref="imgUpload" id="myImgUpload" url="http://localhost:5001/api/conversation/create" v-model="postForm.image_uri" />
           </div>
           <div class="bottom">
-            <el-button :loading="startLoading" type="primary" style="width:80%; background-color: #671afb; border-color: #671afb;" @click="chatStart">开始聊天</el-button>
-            <br><br>
-            <el-button :loading="resetLoading" type="primary" style="width:80%; background-color: #671afb; border-color: #671afb;" @click="chatRestart">重新开始</el-button>
+            <el-button :loading="startLoading" type="primary" style="width:40%; background-color: rgb(107, 174, 214); border-color: rgb(107, 174, 214);" @click="chatStart">开始聊天</el-button>
+            <el-button :loading="resetLoading" type="primary" style="width:40%; background-color: rgb(107, 174, 214); border-color: rgb(107, 174, 214);" @click="chatRestart">重新开始</el-button>
           </div>
         </div>
       </el-col>
@@ -27,12 +26,12 @@
           </div>
           <form class="message-input">
             <el-input v-model="questionForm.content" placeholder="请输入内容" />
-            <el-button icon="el-icon-paperclip" circle @click="sendQuestion"/>
-            <el-button :loading="askLoading" type="primary" icon="el-icon-position" style="background-color: #671afb; border-color: #671afb;" @click="sendQuestion" circle />
+            <el-button icon="el-icon-delete" circle  @click="chatClear"/>
+            <el-button :loading="askLoading" type="primary" icon="el-icon-position" style="background-color: rgb(107, 174, 214); border-color: rgb(107, 174, 214);" @click="sendQuestion" circle />
           </form>
-          <div class="button-wrapper">
+          <!-- <div class="button-wrapper">
             <el-button @click="chatClear">清空</el-button>
-          </div>
+          </div> -->
         </div>
       </el-col>
     </el-row>
@@ -160,7 +159,7 @@ export default {
 .left {
   float: left;
   width: 100%;
-  height: 650px;
+  height: 500px;
   border: 1px solid #e6e6e6;
   border-radius: 20px 20px 20px 20px;
   background-color: #fff;
@@ -175,6 +174,7 @@ export default {
   .image-upload {
     position: relative;
     width: 100%;
+    height: 330px;
     padding: 12px 10% 16px;
     cursor: pointer;
     background-color: #fff;
@@ -192,7 +192,7 @@ export default {
   }
   .bottom {
     position: relative;
-    padding: 12px 10% 16px;
+    padding: 15px 10% 16px;
     text-align: center;
   }
 }
@@ -200,20 +200,20 @@ export default {
   position: relative;
   float: left;
   width: 100%;
-  height: 650px;
+  height: 500px;
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 20px 20px 20px 20px;
   .chat-messages {
-    height: 500px;
-    max-height: 500px;
+    height: 400px;
+    max-height: 400;
     overflow: auto;
     padding: 30px;
   }
   .message-input {
     position: absolute;
     display: flex;
-    left: 10px;
+    left: 20px;
     width: 95%;
     justify-content: center;
     padding: 20px;

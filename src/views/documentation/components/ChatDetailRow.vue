@@ -74,7 +74,7 @@ export default {
     justify-content: flex-end;
 
     .message-box {
-      background-color: #681afd;
+      background-color: #4292c6;
       color: #fff;
 
       &-wrapper {

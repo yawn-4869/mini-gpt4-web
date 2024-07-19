@@ -1,9 +1,7 @@
 <template>
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
     <breadcrumb class="breadcrumb-container" />
-
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -26,6 +24,9 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+    </div>
+    <div class="logo-wrapper">
+      <img :src="'/logo2.png'" class="img-wrapper">
     </div>
   </div>
 </template>
@@ -81,6 +82,17 @@ export default {
 
   .breadcrumb-container {
     float: left;
+  }
+
+  .logo-wrapper {
+
+    .img-wrapper {
+      width: 150px;
+      height: 50px;
+      position: relative;
+      float: right;
+      margin-right: 40px;
+    }
   }
 
   .right-menu {

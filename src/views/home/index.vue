@@ -43,9 +43,9 @@
             </el-form>
           </div>
           <div class="bottom">
-            <el-button type="primary" style="width: 100%; background-color: #671afb" @click="startChat">开始聊天</el-button>
+            <el-button type="primary" style="width: 100%; background-color: rgb(107, 174, 214); border-color: rgb(107, 174, 214);" @click="startChat">开始聊天</el-button>
             <br><br>
-            <el-button type="primary" style="width: 100%; background-color: #671afb" @click="resetSelect">重置选择</el-button>
+            <el-button type="primary" style="width: 100%; background-color: rgb(107, 174, 214); border-color: rgb(107, 174, 214);" @click="resetSelect">重置选择</el-button>
           </div>
         </div>
       </el-col>
@@ -56,13 +56,13 @@
           </div>
           <div class="model-prompt">
             <div class="button-wrapper">
-              <el-button type="primary" style="width:100%; background-color: #671afb" @click="dataGet">训练数据获取</el-button>
+              <el-button type="primary" style="width:100%; background-color: rgb(107, 174, 214); border-color: rgb(107, 174, 214);" @click="dataGet">训练数据获取</el-button>
               <br><br>
-              <el-button type="primary" style="width:100%; background-color: #671afb" @click="dataPreprocess">训练数据预处理</el-button>
+              <el-button type="primary" style="width:100%; background-color: rgb(107, 174, 214); border-color: rgb(107, 174, 214);" @click="dataPreprocess">训练数据预处理</el-button>
               <br><br>
-              <el-button type="primary" style="width:100%; background-color: #671afb" @click="modelStart">开始训练</el-button>
+              <el-button type="primary" style="width:100%; background-color: rgb(107, 174, 214); border-color: rgb(107, 174, 214);" @click="modelStart">开始训练</el-button>
               <br><br>
-              <el-button type="primary" style="width:100%; background-color: #671afb" @click="weightManage">训练权重管理</el-button>
+              <el-button type="primary" style="width:100%; background-color: rgb(107, 174, 214); border-color: rgb(107, 174, 214);" @click="weightManage">训练权重管理</el-button>
             </div>
           </div>
         </div>
